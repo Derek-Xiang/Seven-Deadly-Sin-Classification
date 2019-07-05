@@ -1,0 +1,47 @@
+---
+# Common vars
+availability_zone: melbourne-qh2-uom
+
+# Volume
+# volumes:
+#   - vol_name_1: ccc50
+#     vol_size_1: 10
+#   - vol_name_1: volume_1
+#     vol_size_1: 60
+vol_name_1: volume_1
+vol_size_1: 60
+vol_name_2: volume_2
+vol_size_2: 60
+vol_name_3: volume_3
+vol_size_3: 60
+vol_name_4: volume_4
+vol_size_4: 70
+
+# Security group
+security_groups:
+  - name: ssh
+    description: "Allows SSH (port 22) from world"
+    protocol: tcp
+    port_range_min: 22
+    port_range_max: 22
+    remote_ip_prefix: 0.0.0.0/0
+  - name: http
+    description: "Allows HTTP (port 80) and HTTPS (port 443) from world"
+    protocol: tcp
+    port_range_min: 80
+    port_range_max: 80
+    remote_ip_prefix: 0.0.0.0/0
+
+instance_name_1: ccc50_1
+instance_name_2: ccc50_2
+instance_name_3: ccc50_3
+instance_name_4: ccc50_4
+# instances: 
+#   - instance_name: ccc50_000
+#   - instance_name: ccc50_2
+#   - instance_name: ccc50_3
+#   - instance_name: ccc50_4
+
+instance_image: 394a1b97-a8d3-4593-aab0-8156f0dfeeca
+instance_key_name: ccc50test
+instance_flavor: uom.mse.2c9g

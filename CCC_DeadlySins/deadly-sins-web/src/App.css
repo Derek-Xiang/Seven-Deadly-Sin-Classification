@@ -1,0 +1,11 @@
+
+.App {
+  text-align: center;
+}
+
+.content{
+  padding: '0 50px';
+  height: calc(80vh);
+  background-color: #ffffff;
+
+}

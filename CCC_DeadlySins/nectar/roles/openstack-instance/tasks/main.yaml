@@ -1,0 +1,96 @@
+---
+# - name: Create the first instance  
+#   os_server: 
+#     name: '{{ item.instance_name }}'
+#     image: '{{ instance_image }}'
+#     key_name: '{{ instance_key_name}}'
+#     flavor: '{{ instance_flavor }}'
+#     availability_zone: '{{ availability_zone }}'
+#     security_groups: '{{ sg_names }}'
+#     volumes: '{{ item.os_volume }}'
+#     auto_floating_ip: yes
+#     wait: yes
+#     timeout: 600
+#     state: present
+#   loop: '{{ instances }}'
+#   register: os_instance
+
+# - debug:
+#    msg: "Instance {{ instance_name }} has been created. IP address is {{ os_instance.openstack.public_v4 }}" 
+#   when: os_instance.openstack is defined
+
+- name: Create the first instance  
+  os_server: 
+    name: '{{ instance_name_1 }}'
+    image: '{{ instance_image }}'
+    key_name: '{{ instance_key_name}}'
+    flavor: '{{ instance_flavor }}'
+    availability_zone: '{{ availability_zone }}'
+    security_groups: '{{ sg_names }}'
+    volumes: '{{ os_vol_id_1 }}'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  register: os_instance_1
+
+- debug:
+    msg: "Instance {{ instance_name_1 }} has been created. IP address is {{ os_instance_1.openstack.public_v4 }}" 
+  when: os_instance_1.openstack is defined
+  
+- name: Create the second instance  
+  os_server: 
+    name: '{{ instance_name_2 }}'
+    image: '{{ instance_image }}'
+    key_name: '{{ instance_key_name}}'
+    flavor: '{{ instance_flavor }}'
+    availability_zone: '{{ availability_zone }}'
+    security_groups: '{{ sg_names }}'
+    volumes: '{{ os_vol_id_2 }}'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  register: os_instance_2
+
+- debug:
+    msg: "Instance {{ instance_name_2 }} has been created. IP address is {{ os_instance_2.openstack.public_v4 }}" 
+  when: os_instance_2.openstack is defined
+
+- name: Create the third instance  
+  os_server: 
+    name: '{{ instance_name_3 }}'
+    image: '{{ instance_image }}'
+    key_name: '{{ instance_key_name}}'
+    flavor: '{{ instance_flavor }}'
+    availability_zone: '{{ availability_zone }}'
+    security_groups: '{{ sg_names }}'
+    volumes: '{{ os_vol_id_3 }}'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  register: os_instance_3
+
+- debug:
+    msg: "Instance {{ instance_name_3 }} has been created. IP address is {{ os_instance_3.openstack.public_v4 }}" 
+  when: os_instance_3.openstack is defined
+
+- name: Create the forth instance  
+  os_server: 
+    name: '{{ instance_name_4 }}'
+    image: '{{ instance_image }}'
+    key_name: '{{ instance_key_name}}'
+    flavor: '{{ instance_flavor }}'
+    availability_zone: '{{ availability_zone }}'
+    security_groups: '{{ sg_names }}'
+    volumes: '{{ os_vol_id_4 }}'
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  register: os_instance_4
+
+- debug:
+    msg: "Instance {{ instance_name_4 }} has been created. IP address is {{ os_instance_4.openstack.public_v4 }}" 
+  when: os_instance_4.openstack is defined

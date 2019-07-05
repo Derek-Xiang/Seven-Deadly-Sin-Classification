@@ -1,0 +1,161 @@
+---
+- name: Deploy environment
+  become: yes
+  lineinfile: 
+    path: /etc/environment
+    line: 'http_proxy=\"http://wwwproxy.unimelb.edu.au:8000\"\n
+          https_proxy=\"http://wwwproxy.unimelb.edu.au:8000\"\n
+          ftp_proxy=\"http://wwwproxy.unimelb.edu.au:8000\"\n
+          no_proxy=\"http://wwwproxy.unimelb.edu.au:8000\"'
+    state: present
+         
+- name: "Install packages"
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - "aptitude"
+    - "apt-transport-https"
+    - "ca-certificates"
+    - "curl"
+    - "software-properties-common"
+    - "build-essential"
+    - "python-software-properties"
+
+- name: Install python3
+  become: yes
+  apt: 
+    name: ['python3']
+    update_cache: yes
+    state: latest
+
+- name: Install pip3
+  become: yes
+  apt: 
+    name: ['python3-pip']
+    state: latest
+    update_cache: yes
+
+- name: Update pip3
+  become: yes
+  pip: 
+    name: ['pip3']
+    state: latest
+    update_cache: yes
+
+- name: Install tweepy,flask,flask-restful,tennsorflow,bleach
+  become: yes
+  pip: 
+    name: ['tweepy','flask','flask-restful','tensorflow','bleach']
+    state: latest
+    update_cache: yes
+
+- name: Install git
+  become: yes
+  apt: 
+    name: ['git']
+    update_cache: yes
+    state: latest
+
+- name: Install numpy and pandas
+  become: yes
+  apt: 
+    name: ['numpy','pandas']
+    state: latest
+    update_cache: yes
+
+- name: "Install 'docker-ce'"
+  apt:
+    name: "docker-ce"
+    update_cache: yes
+
+- name: Install docker
+  become: yes
+  apt:
+    name: ['docker', 'docker-compose']
+    state: present
+
+- name: Pull docker image
+  become: yes
+  docker_image:
+    name: couchdb
+
+- name: Run docker couchdb
+  become: yes
+  docker_container:
+    name: couchdb
+    image: couchdb
+    state: started
+    ports: 5984:5984
+
+- name: Configure cookie in docker container
+  become: yes
+  command: sudo docker exec -it couchdb bash -c "echo \"-setcookie couchdb_cluster\" >> /opt/couchdb/etc/vm.args"
+
+- name: Configure hostname in docker container
+  become: yes
+  command: sudo docker exec -it couchdb bash -c "echo \"-name couchdb@{{ ansible_eth0.ipv4.address }}\" >> /opt/couchdb/etc/vm.args"
+
+- name: Restart docker container
+  become: yes
+  docker_container:
+    name: couchdb
+    state: restart
+
+- name: Install apache2
+  become: yes
+  apt: 
+    name: ['apache2']
+    update_cache: yes
+    state: latest
+
+- name: Install yarn package
+  become: yes
+  command: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+- name: Install yarn package
+  become: yes
+  command: echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+- name: Install yarn
+  become: yes
+  apt:
+    name: ['yarn']
+    state: latest        
+    update_cache: yes
+
+- name: Install nodejs,npm
+  become: yes
+  apt:
+    name: ['nodejs','npm']
+    state: latest
+    update_cache: yes
+
+- name: Init npm
+  become: yes
+  command: npm init OR npm init -y
+
+- name: Install create-react-app 
+  become: yes
+  npm: 
+    name: "{{ item }}"
+    update_cache: yes
+    with_items:
+      - "webpack --save"
+      - "webpack-dev-server --save"
+      - "react --save"
+      - "create-react-app"
+
+- name: Install couchdb
+  become: yes
+  git: 
+    repo: "https://git-wip-us.apache.org/repos/asf/couchdb.git"
+    dest: "{{ couchdb_install_dir }}"
+    accept_hostkey: yes
+    version: "{{ couchdb_version }}"
+
+- name: install couchdb
+  become: yes
+  apt:
+    name: ['couchdb']
+    update_cache: yes
+    state: latest  

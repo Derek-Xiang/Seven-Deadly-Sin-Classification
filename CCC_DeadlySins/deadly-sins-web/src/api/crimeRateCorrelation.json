@@ -1,0 +1,9 @@
+[
+    {"name":"Envy","correlation":0.6255202735815252},
+    {"name":"Wrath","correlation":0.6176811085414585},
+    {"name":"Gluttony","correlation":0.6150169191879669},
+    {"name":"Greed","correlation":0.6063902809158757},
+    {"name":"Lust","correlation":0.6015808617589176},
+    {"name":"Sloth","correlation":0.5811615257280293},
+    {"name":"Pride","correlation":0.5395179003962228}
+]

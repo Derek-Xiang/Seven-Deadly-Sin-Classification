@@ -1,0 +1,79 @@
+---
+- name: Create volume1 on NeCTAR
+  os_volume:
+    display_name: '{{ vol_name_1 }}'
+    size: '{{ vol_size_1 }}'
+    availability_zone: '{{ availability_zone }}'
+    wait: yes
+    timeout: 600
+    state: present
+  loop: '{{ volumes }}'
+  register: os_vol_1
+
+# - name: Create volume1 on NeCTAR
+#   os_volume:
+#     display_name: '{{ item.vol_name_1 }}'
+#     size: '{{ item.vol_size_1 }}'
+#     availability_zone: '{{ availability_zone }}'
+#     wait: yes
+#     timeout: 600
+#     state: present
+#   loop: '{{ volumes }}'
+#   register: os_vol_1
+
+- debug: 
+    msg: "Volume {{ os_vol_1 }} has been crated. "
+
+- name: Create volume2 on NeCTAR
+  os_volume:
+    display_name: '{{ vol_name_2 }}'
+    size: '{{ vol_size_2 }}'
+    availability_zone: '{{ availability_zone }}'
+    wait: yes
+    timeout: 600
+    state: present
+  register: os_vol_2
+
+- debug: 
+    msg: "Volume {{ os_vol_2 }} has been crated. "
+
+- name: Create volume3 on NeCTAR
+  os_volume:
+    display_name: '{{ vol_name_3 }}'
+    size: '{{ vol_size_3 }}'
+    availability_zone: '{{ availability_zone }}'
+    wait: yes
+    timeout: 600
+    state: present
+  register: os_vol_3
+
+- debug: 
+    msg: "Volume {{ os_vol_3 }} has been crated. "
+
+- name: Create volume4 on NeCTAR
+  os_volume:
+    display_name: '{{ vol_name_4 }}'
+    size: '{{ vol_size_4 }}'
+    availability_zone: '{{ availability_zone }}'
+    wait: yes
+    timeout: 600
+    state: present
+#  loop: '{{ volumes }}'
+  register: os_vol_4
+
+- debug: 
+    msg: "Volume {{ os_vol_4 }} has been crated. "
+
+  set_fact:
+    os_vol_id_1: '{{ os_vol_id_1|default([]) + [ os_vol_1.id ]}}'
+    os_vol_id_2: '{{ os_vol_id_2|default([]) + [ os_vol_2.id ]}}'
+    os_vol_id_3: '{{ os_vol_id_3|default([]) + [ os_vol_3.id ]}}'
+    os_vol_id_4: '{{ os_vol_id_4|default([]) + [ os_vol_4.id ]}}'
+ 
+  # set_fact:
+  #   os_vol_id_1: '{{ os_vol_id_1|default([]) + [ item.id ]}}'
+  #   loop: '{{ os_vol_1.results }}'
+  #   os_vol_id_2: '{{ os_vol_id_2|default([]) + [ os_vol_2.id ]}}'
+  #   os_vol_id_3: '{{ os_vol_id_3|default([]) + [ os_vol_3.id ]}}'
+  #   os_vol_id_4: '{{ os_vol_id_4|default([]) + [ os_vol_4.id ]}}'
+ 
